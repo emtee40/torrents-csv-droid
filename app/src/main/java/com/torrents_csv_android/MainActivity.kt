@@ -5,10 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
@@ -24,15 +27,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.torrents_csv_android.ui.theme.MainTheme
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : ComponentActivity() {
+
+  private val vm: TorrentViewModel by viewModels()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+
     setContent {
       MainTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-          AppView()
+          AppView(vm)
         }
       }
     }
@@ -40,16 +49,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppView() {
+fun AppView(vm: TorrentViewModel) {
   Scaffold {
-    MainView()
+    MainView(vm)
   }
 }
 
 @Composable
-fun MainView() {
-  val vm = TorrentViewModel()
+fun MainView(vm: TorrentViewModel) {
   var searchText by rememberSaveable { mutableStateOf("") }
+  val listState = rememberLazyListState()
+  val coroutineScope = rememberCoroutineScope()
 
   Column {
     Row {
@@ -60,13 +70,16 @@ fun MainView() {
         },
         onSubmit = {
           if (searchText.count() >= 3) {
-            vm.getTorrentList(searchText)
+            vm.fetchTorrentList(searchText)
+            coroutineScope.launch {
+              listState.animateScrollToItem(0)
+            }
           }
         })
     }
     Row {
       if (vm.errorMessage.isEmpty()) {
-        TorrentListView(vm.torrentList)
+        TorrentListView(vm.torrentList, listState)
       } else {
         Text(vm.errorMessage)
       }
@@ -90,9 +103,9 @@ fun RowScope.TableCell(
 }
 
 @Composable
-fun TorrentListView(torrents: List<Torrent>) {
+fun TorrentListView(torrents: List<Torrent>, listState: LazyListState) {
   Column(modifier = Modifier.padding(defaultPadding)) {
-    LazyColumn(modifier = Modifier.fillMaxHeight()) {
+    LazyColumn(state = listState, modifier = Modifier.fillMaxHeight()) {
       items(torrents) { torrent ->
         TorrentView(torrent)
         Divider(Modifier.padding(vertical = defaultPadding))
@@ -170,7 +183,9 @@ fun SearchField(
 
   OutlinedTextField(
     value = text,
-    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+    modifier = Modifier
+      .fillMaxWidth()
+      .focusRequester(focusRequester),
     onValueChange = onSearchChange,
     label = {
       Text("Torrents-csv")
@@ -273,15 +288,17 @@ fun TorrentPreview() {
 @Preview(showBackground = true)
 @Composable
 fun TorrentListPreview() {
+  val listState = rememberLazyListState()
+
   MainTheme {
-    TorrentListView(sampleTorrentList)
+    TorrentListView(sampleTorrentList, listState)
   }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun FullViewPreview() {
-  MainTheme {
-    AppView()
-  }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun FullViewPreview() {
+//  MainTheme {
+//    AppView()
+//  }
+//}

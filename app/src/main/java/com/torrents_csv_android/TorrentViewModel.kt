@@ -14,7 +14,7 @@ class TorrentViewModel : ViewModel() {
   val torrentList: List<Torrent>
     get() = _torrentList
 
-  fun getTorrentList(search: String) {
+  fun fetchTorrentList(search: String) {
     viewModelScope.launch {
       val apiService = APIService.getInstance()
       val call = apiService.getTorrents(search = search)
