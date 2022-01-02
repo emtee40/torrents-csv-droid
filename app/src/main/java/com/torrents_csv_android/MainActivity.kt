@@ -118,8 +118,7 @@ fun TorrentListView(torrents: List<Torrent>, listState: LazyListState) {
 fun TorrentView(torrent: Torrent) {
   val context = LocalContext.current
   val magnet = magnetLink(torrent.infohash, torrent.name)
-  val intent =
-    remember { Intent(Intent.ACTION_VIEW, Uri.parse(magnet)) }
+  val intent = Intent(Intent.ACTION_VIEW, Uri.parse(magnet))
 
   val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US)
   val created = sdf.format(Date(torrent.created_unix.toLong() * 1000))
