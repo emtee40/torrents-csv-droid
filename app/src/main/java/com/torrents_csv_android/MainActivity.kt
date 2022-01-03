@@ -77,9 +77,12 @@ fun MainView(vm: TorrentViewModel) {
           }
         })
     }
+    if (vm.loading) {
+      LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+    }
     Row {
       if (vm.errorMessage.isEmpty()) {
-        TorrentListView(vm.torrentList, listState)
+        TorrentListView(vm.torrents, listState)
       } else {
         Text(vm.errorMessage)
       }

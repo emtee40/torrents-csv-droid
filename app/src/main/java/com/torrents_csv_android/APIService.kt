@@ -1,6 +1,5 @@
 package com.torrents_csv_android
 
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -22,7 +21,7 @@ const val BASE_URL = "https://torrents-csv.ml/service/"
 interface APIService {
 
   @GET("search")
-  suspend fun getTorrents(@Query("q") search: String): Response<List<Torrent>>
+  suspend fun getTorrents(@Query("q") search: String): List<Torrent>
 
   companion object {
 
