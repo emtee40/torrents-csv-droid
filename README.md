@@ -12,3 +12,4 @@ An android client to search https://torrents-csv.ml
 - [hackernews client](https://www.avinsharma.com/android-hackernews-client-jetpack-compose/)
 - [async data](https://alfianlosari.medium.com/loading-asynchronous-data-using-android-architecture-components-safely-1b3c583668f5)
 - [State](https://developer.android.com/jetpack/compose/state)
+- [Navigation drawer](https://johncodeos.com/how-to-create-a-navigation-drawer-with-jetpack-compose/)
