@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -23,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -199,8 +202,11 @@ fun SearchField(
       Icon(Icons.Filled.Search, "Search")
     },
     singleLine = true,
-//    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-    keyboardActions = KeyboardActions(onDone = onSubmit),
+    keyboardActions = KeyboardActions(onSearch = onSubmit),
+    keyboardOptions = KeyboardOptions.Default.copy(
+      keyboardType = KeyboardType.Text,
+      imeAction = ImeAction.Search,
+    ),
     isError = !isValid,
   )
 
