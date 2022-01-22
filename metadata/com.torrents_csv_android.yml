@@ -13,8 +13,8 @@ RepoType: git
 Repo: https://codeberg.org/heretic/torrents-csv-android
 
 Builds:
-  - versionName: 1.0.2
-    versionCode: 3
+  - versionName: 1.0.3
+    versionCode: 4
     commit: v1.0.2
     subdir: app
     sudo:
@@ -26,5 +26,5 @@ Builds:
 
 AutoUpdateMode: Version v%v
 UpdateCheckMode: Tags
-CurrentVersion: 1.0.2
-CurrentVersionCode: 3
+CurrentVersion: 1.0.3
+CurrentVersionCode: 4
