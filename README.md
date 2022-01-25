@@ -2,6 +2,13 @@
 
 An android client to search https://torrents-csv.ml
 
+## Donate
+
+If you'd like to support development, consider donating here:
+
+- https://liberapay.com/dessalines/
+
+
 ## Tutorials
 
 - [view abstraction](https://proandroiddev.com/building-the-right-android-view-abstraction-27526d8a45c7)
