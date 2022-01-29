@@ -15,7 +15,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -155,14 +154,16 @@ fun SearchField(
         keyboardActions = KeyboardActions(onSearch = onSubmit),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Search,
+            autoCorrect = false,
         ),
         isError = !isValid,
     )
 
-    DisposableEffect(Unit) {
-        focusRequester.requestFocus()
-        onDispose { }
-    }
+    // TODO not sure why, but this is triggering all caps
+//    DisposableEffect(Unit) {
+//        focusRequester.requestFocus()
+//        onDispose { }
+//    }
 }
 
 @Preview(showBackground = true)
