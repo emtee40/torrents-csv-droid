@@ -16,8 +16,8 @@ android {
         applicationId "com.torrents_csv_android"
         minSdk 29
         targetSdk 31
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 7
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
