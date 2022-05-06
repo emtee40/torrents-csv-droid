@@ -8,10 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -22,9 +19,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.NativeKeyEvent
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -154,7 +154,7 @@ fun TorrentView(torrent: Torrent) {
 fun SearchField(
     text: String,
     onSearchChange: (String) -> Unit,
-    onSubmit: (KeyboardActionScope) -> Unit
+    onSubmit: () -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     val isValid = text.count() >= 3
@@ -163,7 +163,13 @@ fun SearchField(
         value = text,
         modifier = Modifier
             .fillMaxWidth()
-            .focusRequester(focusRequester),
+            .focusRequester(focusRequester)
+            .onKeyEvent {
+                if (it.nativeKeyEvent.keyCode == NativeKeyEvent.KEYCODE_ENTER) {
+                    onSubmit()
+                }
+                false
+            },
         onValueChange = onSearchChange,
         label = {
             Text("Torrents-csv")
@@ -175,7 +181,7 @@ fun SearchField(
             Icon(Icons.Filled.Search, "Search")
         },
         singleLine = true,
-        keyboardActions = KeyboardActions(onDone = onSubmit),
+        keyboardActions = KeyboardActions(onDone = { onSubmit() }),
         keyboardOptions = KeyboardOptions.Default.copy(
             autoCorrect = false,
         ),
