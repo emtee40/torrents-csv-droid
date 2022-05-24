@@ -1,10 +1,12 @@
 package com.torrents_csv_android
 
+import androidx.annotation.Keep
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+@Keep
 data class Torrent(
     var completed: Int,
     var created_unix: Int,

@@ -17,6 +17,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -26,6 +27,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -155,16 +157,17 @@ fun TorrentView(torrent: Torrent) {
 fun SearchField(
     text: String,
     onSearchChange: (String) -> Unit,
-    onSubmit: () -> Unit
+    onSubmit: () -> Unit,
 ) {
-    val focusRequester = remember { FocusRequester() }
     val isValid = text.count() >= 3
+
+    val focusRequester = remember { FocusRequester() }
 
     OutlinedTextField(
         value = text,
         modifier = Modifier
-            .fillMaxWidth()
             .focusRequester(focusRequester)
+            .fillMaxWidth()
             .onKeyEvent {
                 if (it.nativeKeyEvent.keyCode == NativeKeyEvent.KEYCODE_ENTER) {
                     onSubmit()
@@ -185,9 +188,14 @@ fun SearchField(
         keyboardActions = KeyboardActions(onDone = { onSubmit() }),
         keyboardOptions = KeyboardOptions.Default.copy(
             autoCorrect = false,
+            capitalization = KeyboardCapitalization.None,
         ),
         isError = !isValid,
     )
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 }
 
 @Preview(showBackground = true)
