@@ -6,13 +6,23 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -30,22 +40,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.torrents_csv_android.*
+import com.torrents_csv_android.Torrent
+import com.torrents_csv_android.formatSize
+import com.torrents_csv_android.magnetLink
+import com.torrents_csv_android.sampleTorrent1
+import com.torrents_csv_android.sampleTorrentList
 import com.torrents_csv_android.ui.theme.DEFAULT_PADDING
 import com.torrents_csv_android.ui.theme.MainTheme
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun RowScope.TableCell(
     text: String,
     weight: Float,
-    textAlign: TextAlign = TextAlign.Start,
+    textAlign: TextAlign = TextAlign.Start
 ) {
     Text(
         text = text,
         Modifier.weight(weight),
         style = MaterialTheme.typography.body2,
-        textAlign = textAlign,
+        textAlign = textAlign
     )
 }
 
@@ -80,7 +95,8 @@ fun TorrentView(torrent: Torrent) {
                     context.startActivity(intent)
                 } catch (e: ActivityNotFoundException) {
                     Toast.makeText(
-                        context, "No torrent app installed",
+                        context,
+                        "No torrent app installed",
                         Toast
                             .LENGTH_SHORT
                     ).show()
@@ -89,7 +105,8 @@ fun TorrentView(torrent: Torrent) {
             onLongClick = {
                 localClipboardManager.setText(AnnotatedString(magnet))
                 Toast.makeText(
-                    context, "Magnet link copied to clipboard",
+                    context,
+                    "Magnet link copied to clipboard",
                     Toast
                         .LENGTH_SHORT
                 ).show()
@@ -103,7 +120,7 @@ fun TorrentView(torrent: Torrent) {
                 torrent.name,
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.subtitle1
             )
         }
 
@@ -120,7 +137,7 @@ fun TorrentView(torrent: Torrent) {
                 TableCell(
                     text = torrent.seeders.toString(),
                     weight = column2Weight,
-                    textAlign = TextAlign.End,
+                    textAlign = TextAlign.End
                 )
             }
 //      Row(Modifier.fillMaxWidth()) {
@@ -132,7 +149,7 @@ fun TorrentView(torrent: Torrent) {
                 TableCell(
                     text = formatSize(torrent.size_bytes),
                     weight = column2Weight,
-                    textAlign = TextAlign.End,
+                    textAlign = TextAlign.End
                 )
             }
             Row(Modifier.fillMaxWidth()) {
@@ -140,7 +157,7 @@ fun TorrentView(torrent: Torrent) {
                 TableCell(
                     text = created,
                     weight = column2Weight,
-                    textAlign = TextAlign.End,
+                    textAlign = TextAlign.End
                 )
             }
 //      Row(Modifier.fillMaxWidth()) {
@@ -155,7 +172,7 @@ fun TorrentView(torrent: Torrent) {
 fun SearchField(
     text: String,
     onSearchChange: (String) -> Unit,
-    onSubmit: () -> Unit,
+    onSubmit: () -> Unit
 ) {
     val isValid = text.count() >= 3
 
@@ -184,7 +201,7 @@ fun SearchField(
         },
         singleLine = true,
         keyboardActions = KeyboardActions(onDone = { onSubmit() }),
-        isError = !isValid,
+        isError = !isValid
     )
 
     LaunchedEffect(Unit) {

@@ -17,10 +17,10 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '8.0.0-alpha01' apply false
-    id 'com.android.library' version '8.0.0-alpha01' apply false
+    id 'com.android.application' version '8.0.0-alpha02' apply false
+    id 'com.android.library' version '8.0.0-alpha02' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
-    id "org.jlleitschuh.gradle.ktlint" version "10.2.1"
+    id "org.jlleitschuh.gradle.ktlint" version "11.0.0"
 }
 
 subprojects {
@@ -33,7 +33,7 @@ subprojects {
 
     // Optionally configure plugin
     ktlint {
-//        debug = true
+        // debug = true
         disabledRules.set(["no-wildcard-imports"])
     }
 }
