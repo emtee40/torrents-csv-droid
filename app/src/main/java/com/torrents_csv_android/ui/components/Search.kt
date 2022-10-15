@@ -215,7 +215,9 @@ fun SearchField(
             .onFocusChanged {
                 if (focus != it.isFocused) {
                     focus = it.isFocused
-                } else inputService?.hideSoftwareKeyboard()
+                } else {
+                    inputService?.hideSoftwareKeyboard()
+                }
             }
             .onKeyEvent {
                 if (it.nativeKeyEvent.keyCode == NativeKeyEvent.KEYCODE_ENTER) {

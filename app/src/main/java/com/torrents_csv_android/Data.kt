@@ -20,7 +20,7 @@ val trackerList = listOf(
     "udp://discord.heihachi.pw:6969/announce",
     "udp://bt2.archive.org:6969/announce",
     "udp://bt1.archive.org:6969/announce",
-    "udp://6ahddutb1ucc3cp.ru:6969/announce",
+    "udp://6ahddutb1ucc3cp.ru:6969/announce"
 )
 
 val sampleTorrent1 = Torrent(

@@ -8,7 +8,7 @@ fun formatSize(v: Long): String {
 
 fun magnetLink(
     hash: String,
-    name: String,
+    name: String
 ): String {
     return "magnet:?xt=urn:btih:$hash&dn=${name}${trackerListToUrl(trackerList)}"
 }
