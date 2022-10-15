@@ -27,14 +27,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.NativeKeyEvent
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +53,7 @@ import com.torrents_csv_android.sampleTorrent1
 import com.torrents_csv_android.sampleTorrentList
 import com.torrents_csv_android.ui.theme.DEFAULT_PADDING
 import com.torrents_csv_android.ui.theme.MainTheme
+import kotlinx.coroutines.delay
 import java.util.Date
 import java.util.Locale
 
@@ -54,12 +61,14 @@ import java.util.Locale
 fun RowScope.TableCell(
     text: String,
     weight: Float,
-    textAlign: TextAlign = TextAlign.Start
+    textAlign: TextAlign = TextAlign.Start,
+    color: Color = MaterialTheme.colors.onBackground
 ) {
     Text(
         text = text,
         Modifier.weight(weight),
         style = MaterialTheme.typography.body2,
+        color = color,
         textAlign = textAlign
     )
 }
@@ -133,11 +142,13 @@ fun TorrentView(torrent: Torrent) {
                 .padding(horizontal = DEFAULT_PADDING)
         ) {
             Row(Modifier.fillMaxWidth()) {
+                val seeders = torrent.seeders
                 TableCell(text = "Seeds", weight = column1Weight)
                 TableCell(
-                    text = torrent.seeders.toString(),
+                    text = seeders.toString(),
                     weight = column2Weight,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
+                    color = seederColor(seeders)
                 )
             }
 //      Row(Modifier.fillMaxWidth()) {
@@ -168,6 +179,16 @@ fun TorrentView(torrent: Torrent) {
     }
 }
 
+fun seederColor(seeders: Int): Color {
+    return if (seeders in 1..5) {
+        Color.Unspecified
+    } else if (seeders > 5) {
+        Color.Green
+    } else {
+        Color.Red
+    }
+}
+
 @Composable
 fun SearchField(
     text: String,
@@ -177,12 +198,25 @@ fun SearchField(
     val isValid = text.count() >= 3
 
     val focusRequester = remember { FocusRequester() }
+    var focus by remember { mutableStateOf(false) }
+    val inputService = LocalTextInputService.current
+
+    LaunchedEffect(Unit) {
+        delay(300)
+        inputService?.showSoftwareKeyboard()
+        focusRequester.requestFocus()
+    }
 
     OutlinedTextField(
         value = text,
         modifier = Modifier
             .focusRequester(focusRequester)
             .fillMaxWidth()
+            .onFocusChanged {
+                if (focus != it.isFocused) {
+                    focus = it.isFocused
+                } else inputService?.hideSoftwareKeyboard()
+            }
             .onKeyEvent {
                 if (it.nativeKeyEvent.keyCode == NativeKeyEvent.KEYCODE_ENTER) {
                     onSubmit()
@@ -199,14 +233,11 @@ fun SearchField(
         trailingIcon = {
             Icon(Icons.Filled.Search, "Search")
         },
+        maxLines = 1,
         singleLine = true,
         keyboardActions = KeyboardActions(onDone = { onSubmit() }),
         isError = !isValid
     )
-
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
 }
 
 @Preview(showBackground = true)
