@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -40,7 +41,7 @@ import androidx.compose.ui.input.key.NativeKeyEvent
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalTextInputService
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -189,6 +190,7 @@ fun seederColor(seeders: Int): Color {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchField(
     text: String,
@@ -199,11 +201,11 @@ fun SearchField(
 
     val focusRequester = remember { FocusRequester() }
     var focus by remember { mutableStateOf(false) }
-    val inputService = LocalTextInputService.current
+    val kbController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(Unit) {
         delay(300)
-        inputService?.showSoftwareKeyboard()
+        kbController?.show()
         focusRequester.requestFocus()
     }
 
@@ -216,7 +218,7 @@ fun SearchField(
                 if (focus != it.isFocused) {
                     focus = it.isFocused
                 } else {
-                    inputService?.hideSoftwareKeyboard()
+                    kbController?.hide()
                 }
             }
             .onKeyEvent {
