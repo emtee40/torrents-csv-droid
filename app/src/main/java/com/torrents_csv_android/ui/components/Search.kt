@@ -18,13 +18,15 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -63,12 +65,12 @@ fun RowScope.TableCell(
     text: String,
     weight: Float,
     textAlign: TextAlign = TextAlign.Start,
-    color: Color = MaterialTheme.colors.onBackground
+    color: Color = MaterialTheme.colorScheme.onBackground
 ) {
     Text(
         text = text,
         Modifier.weight(weight),
-        style = MaterialTheme.typography.body2,
+        style = MaterialTheme.typography.bodySmall,
         color = color,
         textAlign = textAlign
     )
@@ -130,7 +132,7 @@ fun TorrentView(torrent: Torrent) {
                 torrent.name,
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.subtitle1
+                style = MaterialTheme.typography.titleSmall
             )
         }
 
@@ -180,17 +182,18 @@ fun TorrentView(torrent: Torrent) {
     }
 }
 
+@Composable
 fun seederColor(seeders: Int): Color {
     return if (seeders in 1..5) {
         Color.Unspecified
     } else if (seeders > 5) {
-        Color.Green
+        MaterialTheme.colorScheme.primary
     } else {
-        Color.Red
+        MaterialTheme.colorScheme.error
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun SearchField(
     text: String,
@@ -209,7 +212,10 @@ fun SearchField(
         focusRequester.requestFocus()
     }
 
-    OutlinedTextField(
+    TextField(
+        colors = TextFieldDefaults.textFieldColors(
+            containerColor = Color.Transparent
+        ),
         value = text,
         modifier = Modifier
             .focusRequester(focusRequester)
@@ -228,9 +234,6 @@ fun SearchField(
                 false
             },
         onValueChange = onSearchChange,
-        label = {
-            Text("Torrents-csv")
-        },
         placeholder = {
             Text("Search")
         },
@@ -239,7 +242,7 @@ fun SearchField(
         },
         maxLines = 1,
         singleLine = true,
-        keyboardActions = KeyboardActions(onDone = { onSubmit() }),
+        keyboardActions = KeyboardActions(onDone = { onSubmit(); kbController?.hide() }),
         isError = !isValid
     )
 }

@@ -1,45 +1,35 @@
 package com.torrents_csv_android.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
-
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-  /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun MainTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
+    val ctx = LocalContext.current
+    val android12OrLater = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+    // Dynamic schemes crash on lower than android 12
+    val dynamicPair = if (android12OrLater) {
+        Pair(dynamicLightColorScheme(ctx), dynamicDarkColorScheme(ctx))
     } else {
-        LightColorPalette
+        pink()
+    }
+
+    val systemTheme = if (!isSystemInDarkTheme()) {
+        dynamicPair.first
+    } else {
+        dynamicPair.second
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = systemTheme,
         typography = Typography,
         shapes = Shapes,
         content = content
