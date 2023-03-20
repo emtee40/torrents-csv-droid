@@ -3,6 +3,7 @@ package com.torrents_csv_android.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
@@ -20,7 +21,7 @@ fun SearchActivity(vm: SearchViewModel) {
     var searchText by rememberSaveable { mutableStateOf("") }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    Column {
+    Column(Modifier.imePadding()) {
         Row {
             SearchField(
                 text = searchText,

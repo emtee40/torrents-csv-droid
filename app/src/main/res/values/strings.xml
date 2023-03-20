@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Torrents-csv</string>
+    <string name="no_torrent_app_installed">No torrent app installed</string>
+    <string name="magnet_link_copied">Magnet link copied to clipboard</string>
+    <string name="seeds">Seeds</string>
+    <string name="size">Size</string>
+    <string name="created">Created</string>
+    <string name="search">Search</string>
 </resources>

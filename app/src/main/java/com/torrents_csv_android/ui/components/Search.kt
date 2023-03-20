@@ -44,11 +44,13 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.torrents_csv_android.R
 import com.torrents_csv_android.Torrent
 import com.torrents_csv_android.formatSize
 import com.torrents_csv_android.magnetLink
@@ -100,6 +102,8 @@ fun TorrentView(torrent: Torrent) {
     val created = sdf.format(Date(torrent.created_unix.toLong() * 1000))
 //  val scraped = sdf.format(Date(torrent.scraped_date.toLong() * 1000))
 
+    val noTorrentAppInstalledStr = stringResource(R.string.no_torrent_app_installed)
+    val magnetLinkCopiedStr = stringResource(R.string.magnet_link_copied)
     Column(
         Modifier.combinedClickable(
             onClick = {
@@ -108,9 +112,8 @@ fun TorrentView(torrent: Torrent) {
                 } catch (e: ActivityNotFoundException) {
                     Toast.makeText(
                         context,
-                        "No torrent app installed",
-                        Toast
-                            .LENGTH_SHORT
+                        noTorrentAppInstalledStr,
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             },
@@ -118,9 +121,8 @@ fun TorrentView(torrent: Torrent) {
                 localClipboardManager.setText(AnnotatedString(magnet))
                 Toast.makeText(
                     context,
-                    "Magnet link copied to clipboard",
-                    Toast
-                        .LENGTH_SHORT
+                    magnetLinkCopiedStr,
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         )
@@ -146,7 +148,7 @@ fun TorrentView(torrent: Torrent) {
         ) {
             Row(Modifier.fillMaxWidth()) {
                 val seeders = torrent.seeders
-                TableCell(text = "Seeds", weight = column1Weight)
+                TableCell(text = stringResource(R.string.seeds), weight = column1Weight)
                 TableCell(
                     text = seeders.toString(),
                     weight = column2Weight,
@@ -159,7 +161,7 @@ fun TorrentView(torrent: Torrent) {
 //        TableCell(text = torrent.leechers.toString(), weight = column2Weight)
 //      }
             Row(Modifier.fillMaxWidth()) {
-                TableCell(text = "Size", weight = column1Weight)
+                TableCell(text = stringResource(R.string.size), weight = column1Weight)
                 TableCell(
                     text = formatSize(torrent.size_bytes),
                     weight = column2Weight,
@@ -167,7 +169,7 @@ fun TorrentView(torrent: Torrent) {
                 )
             }
             Row(Modifier.fillMaxWidth()) {
-                TableCell(text = "Created", weight = column1Weight)
+                TableCell(text = stringResource(R.string.created), weight = column1Weight)
                 TableCell(
                     text = created,
                     weight = column2Weight,
@@ -193,7 +195,7 @@ fun seederColor(seeders: Int): Color {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchField(
     text: String,
@@ -235,12 +237,11 @@ fun SearchField(
             },
         onValueChange = onSearchChange,
         placeholder = {
-            Text("Search")
+            Text(stringResource(R.string.search))
         },
         trailingIcon = {
-            Icon(Icons.Filled.Search, "Search")
+            Icon(Icons.Filled.Search, stringResource(R.string.search))
         },
-        maxLines = 1,
         singleLine = true,
         keyboardActions = KeyboardActions(onDone = { onSubmit(); kbController?.hide() }),
         isError = !isValid
