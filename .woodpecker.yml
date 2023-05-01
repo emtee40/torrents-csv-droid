@@ -1,0 +1,6 @@
+pipeline:
+  check_formatting:
+    image: gradle:jdk17-alpine
+    commands:
+      - ./gradlew lintKotlin
+

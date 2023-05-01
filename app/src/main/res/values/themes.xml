@@ -4,5 +4,7 @@
     <style name="Theme.torrents_csv_android" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
         <item name="android:forceDarkAllowed">false</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowLightStatusBar">true</item>-->
     </style>
 </resources>
