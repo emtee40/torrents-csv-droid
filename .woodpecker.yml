@@ -2,7 +2,7 @@ pipeline:
   # check_formatting:
   #   image: cimg/android:2023.05
   #   commands:
-  #     - ./gradlew lintKotlin
+  #     - sudo ./gradlew lintKotlin
 
   # prettier_markdown_check:
   #   image: tmknom/prettier
@@ -13,3 +13,5 @@ pipeline:
     image: cimg/android:2023.05
     commands:
       - sudo ./gradlew assembleDebug
+    environment:
+      - ANDROID_HOME=$HOME/Android/Sdk
