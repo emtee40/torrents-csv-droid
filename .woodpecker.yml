@@ -10,6 +10,6 @@ pipeline:
   #     - prettier -c *.md
 
   build_project:
-    image: gradle:jdk17-alpine
+    image: cimg/android:2023.05
     commands:
       - ./gradlew assembleDebug
