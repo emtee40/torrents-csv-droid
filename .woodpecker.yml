@@ -12,4 +12,6 @@ pipeline:
   build_project:
     image: cimg/android:2023.05
     commands:
-      - ./gradlew --no-configuration-cache assembleDebug
+      - chown -R .gradle
+      - ./gradlew androidDependencies
+      - ./gradlew assembleDebug
