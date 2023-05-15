@@ -1,6 +1,6 @@
 pipeline:
   # check_formatting:
-  #   image: gradle:jdk17-alpine
+  #   image: cimg/android:2023.05
   #   commands:
   #     - ./gradlew lintKotlin
 
@@ -12,5 +12,4 @@ pipeline:
   build_project:
     image: cimg/android:2023.05
     commands:
-      - sudo su -
-      - ./gradlew assembleDebug
+      - sudo ./gradlew assembleDebug
