@@ -15,7 +15,7 @@ data class Torrent(
     var seeders: Int,
     var scraped_date: Int,
     var size_bytes: Long,
-    var name: String
+    var name: String,
 )
 
 const val BASE_URL = "https://torrents-csv.ml/service/"

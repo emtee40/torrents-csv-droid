@@ -67,14 +67,14 @@ fun RowScope.TableCell(
     text: String,
     weight: Float,
     textAlign: TextAlign = TextAlign.Start,
-    color: Color = MaterialTheme.colorScheme.onBackground
+    color: Color = MaterialTheme.colorScheme.onBackground,
 ) {
     Text(
         text = text,
         Modifier.weight(weight),
         style = MaterialTheme.typography.bodySmall,
         color = color,
-        textAlign = textAlign
+        textAlign = textAlign,
     )
 }
 
@@ -113,7 +113,7 @@ fun TorrentView(torrent: Torrent) {
                     Toast.makeText(
                         context,
                         noTorrentAppInstalledStr,
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
                 }
             },
@@ -122,19 +122,19 @@ fun TorrentView(torrent: Torrent) {
                 Toast.makeText(
                     context,
                     magnetLinkCopiedStr,
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
-            }
-        )
+            },
+        ),
     ) {
         Row(
-            modifier = Modifier.padding(0.dp, 0.dp, 0.dp, DEFAULT_PADDING)
+            modifier = Modifier.padding(0.dp, 0.dp, 0.dp, DEFAULT_PADDING),
         ) {
             Text(
                 torrent.name,
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.titleSmall,
             )
         }
 
@@ -144,7 +144,7 @@ fun TorrentView(torrent: Torrent) {
         Column(
             Modifier
                 .fillMaxSize()
-                .padding(horizontal = DEFAULT_PADDING)
+                .padding(horizontal = DEFAULT_PADDING),
         ) {
             Row(Modifier.fillMaxWidth()) {
                 val seeders = torrent.seeders
@@ -153,7 +153,7 @@ fun TorrentView(torrent: Torrent) {
                     text = seeders.toString(),
                     weight = column2Weight,
                     textAlign = TextAlign.End,
-                    color = seederColor(seeders)
+                    color = seederColor(seeders),
                 )
             }
 //      Row(Modifier.fillMaxWidth()) {
@@ -165,7 +165,7 @@ fun TorrentView(torrent: Torrent) {
                 TableCell(
                     text = formatSize(torrent.size_bytes),
                     weight = column2Weight,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
                 )
             }
             Row(Modifier.fillMaxWidth()) {
@@ -173,7 +173,7 @@ fun TorrentView(torrent: Torrent) {
                 TableCell(
                     text = created,
                     weight = column2Weight,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
                 )
             }
 //      Row(Modifier.fillMaxWidth()) {
@@ -200,7 +200,7 @@ fun seederColor(seeders: Int): Color {
 fun SearchField(
     text: String,
     onSearchChange: (String) -> Unit,
-    onSubmit: () -> Unit
+    onSubmit: () -> Unit,
 ) {
     val isValid = text.count() >= 3
 
@@ -216,7 +216,7 @@ fun SearchField(
 
     TextField(
         colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.Transparent
+            containerColor = Color.Transparent,
         ),
         value = text,
         modifier = Modifier
@@ -244,7 +244,7 @@ fun SearchField(
         },
         singleLine = true,
         keyboardActions = KeyboardActions(onDone = { onSubmit(); kbController?.hide() }),
-        isError = !isValid
+        isError = !isValid,
     )
 }
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun MainTheme(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val ctx = LocalContext.current
     val android12OrLater = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
@@ -32,6 +32,6 @@ fun MainTheme(
         colorScheme = systemTheme,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

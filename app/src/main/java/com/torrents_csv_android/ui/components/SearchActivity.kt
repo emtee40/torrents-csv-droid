@@ -35,7 +35,7 @@ fun SearchActivity(vm: SearchViewModel) {
                             listState.animateScrollToItem(0)
                         }
                     }
-                }
+                },
             )
         }
         if (vm.loading) {

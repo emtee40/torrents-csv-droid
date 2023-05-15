@@ -20,7 +20,7 @@ val trackerList = listOf(
     "udp://discord.heihachi.pw:6969/announce",
     "udp://bt2.archive.org:6969/announce",
     "udp://bt1.archive.org:6969/announce",
-    "udp://6ahddutb1ucc3cp.ru:6969/announce"
+    "udp://6ahddutb1ucc3cp.ru:6969/announce",
 )
 
 val sampleTorrent1 = Torrent(
@@ -31,7 +31,7 @@ val sampleTorrent1 = Torrent(
     name = "The.French.Dispatch.2021.1080p.AMZN.WEBRip.1400MB.DD5.1.x264-GalaxyRG[TGx]",
     scraped_date = 1639768311,
     seeders = 352,
-    size_bytes = 1506821189
+    size_bytes = 1506821189,
 )
 
 val sampleTorrent2 = Torrent(
@@ -42,10 +42,10 @@ val sampleTorrent2 = Torrent(
     name = "A not real torrent",
     scraped_date = 1619768311,
     seeders = 26,
-    size_bytes = 13068189
+    size_bytes = 13068189,
 )
 
 val sampleTorrentList: List<Torrent> = listOf(
     sampleTorrent1,
-    sampleTorrent2
+    sampleTorrent2,
 )
