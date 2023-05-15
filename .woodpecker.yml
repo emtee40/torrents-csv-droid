@@ -15,5 +15,6 @@ pipeline:
       - id -u
       - id -g
       # - echo $ANDROID_HOME
-      # - sudo chown -R $:root
-      # - ./gradlew assembleDebug
+      - sudo chown -R 1001:1002 .
+      - ls -alhtr
+      - ./gradlew assembleDebug
