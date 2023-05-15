@@ -12,7 +12,5 @@ pipeline:
   build_project:
     image: cimg/android:2023.05
     commands:
-      - ls -alhtr .
-      # - chown -R $USER .gradle
-      - sudo ./gradlew androidDependencies
-      - sudo ./gradlew assembleDebug
+      - sudo su -
+      - ./gradlew assembleDebug
