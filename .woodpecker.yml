@@ -13,6 +13,6 @@ pipeline:
     image: cimg/android:2023.05
     commands:
       - ls -alhtr .
-      - chown -R $USER .gradle
-      - ./gradlew androidDependencies
-      - ./gradlew assembleDebug
+      # - chown -R $USER .gradle
+      - USER=root ./gradlew androidDependencies
+      - USER=root ./gradlew assembleDebug
