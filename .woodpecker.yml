@@ -11,9 +11,7 @@ pipeline:
 
   build_project:
     image: cimg/android:2023.05
-    # user: root
     commands:
-      - echo $ANDROID_HOME
-      - sudo ./gradlew assembleDebug
-    environment:
-      - ANDROID_HOME=/home/circleci/android-sdk
+      # - echo $ANDROID_HOME
+      # - sudo chown -R $:root
+      - ./gradlew assembleDebug
