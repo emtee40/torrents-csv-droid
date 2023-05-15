@@ -12,6 +12,8 @@ pipeline:
   build_project:
     image: cimg/android:2023.05
     commands:
+      - id -u
+      - id -g
       # - echo $ANDROID_HOME
       # - sudo chown -R $:root
-      - ./gradlew assembleDebug
+      # - ./gradlew assembleDebug
