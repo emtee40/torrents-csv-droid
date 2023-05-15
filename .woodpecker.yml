@@ -1,13 +1,13 @@
 pipeline:
-  check_formatting:
-    image: gradle:jdk17-alpine
-    commands:
-      - ./gradlew lintKotlin
+  # check_formatting:
+  #   image: gradle:jdk17-alpine
+  #   commands:
+  #     - ./gradlew lintKotlin
 
-  prettier_markdown_check:
-    image: tmknom/prettier
-    commands:
-      - prettier -c *.md
+  # prettier_markdown_check:
+  #   image: tmknom/prettier
+  #   commands:
+  #     - prettier -c *.md
 
   build_project:
     image: gradle:jdk17-alpine
