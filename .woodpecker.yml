@@ -3,7 +3,7 @@ pipeline:
     image: cimg/android:2023.05
     commands:
       - sudo chown -R circleci:circleci .
-      - sudo ./gradlew lintKotlin
+      - ./gradlew lintKotlin
 
   prettier_markdown_check:
     image: tmknom/prettier
