@@ -1,10 +1,9 @@
 pipeline:
-  # Formatting broken on this one because of underscore package name
-  # check_formatting:
-  #   image: cimg/android:2023.05
-  #   commands:
-  #     - sudo chown -R circleci:circleci .
-  #     - ./gradlew lintKotlin
+  check_formatting:
+    image: cimg/android:2023.05
+    commands:
+      - sudo chown -R circleci:circleci .
+      - ./gradlew lintKotlin
 
   prettier_markdown_check:
     image: tmknom/prettier
