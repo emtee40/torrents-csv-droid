@@ -242,7 +242,10 @@ fun SearchField(
             Icon(Icons.Filled.Search, stringResource(R.string.search))
         },
         singleLine = true,
-        keyboardActions = KeyboardActions(onDone = { onSubmit(); kbController?.hide() }),
+        keyboardActions = KeyboardActions(onDone = {
+            onSubmit()
+            kbController?.hide()
+        }),
         isError = !isValid,
     )
 }
