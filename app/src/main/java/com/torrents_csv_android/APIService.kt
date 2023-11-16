@@ -21,19 +21,21 @@ data class Torrent(
 const val BASE_URL = "https://torrents-csv.ml/service/"
 
 interface APIService {
-
     @GET("search")
-    suspend fun getTorrents(@Query("q") search: String): List<Torrent>
+    suspend fun getTorrents(
+        @Query("q") search: String,
+    ): List<Torrent>
 
     companion object {
-
         private var apiService: APIService? = null
+
         fun getInstance(): APIService {
             if (apiService == null) {
-                apiService = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build().create(APIService::class.java)
+                apiService =
+                    Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build().create(APIService::class.java)
             }
             return apiService!!
         }

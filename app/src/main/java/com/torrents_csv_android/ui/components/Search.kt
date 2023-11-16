@@ -68,7 +68,10 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun TorrentListView(torrents: List<Torrent>, listState: LazyListState) {
+fun TorrentListView(
+    torrents: List<Torrent>,
+    listState: LazyListState,
+) {
     Column {
         Spacer(Modifier.size(DEFAULT_PADDING))
         LazyColumn(state = listState, modifier = Modifier.fillMaxHeight()) {
@@ -118,12 +121,13 @@ fun TorrentView(torrent: Torrent) {
         ),
     ) {
         Row(
-            modifier = Modifier.padding(
-                DEFAULT_PADDING,
-                0.dp,
-                DEFAULT_PADDING,
-                DEFAULT_PADDING,
-            ),
+            modifier =
+                Modifier.padding(
+                    DEFAULT_PADDING,
+                    0.dp,
+                    DEFAULT_PADDING,
+                    DEFAULT_PADDING,
+                ),
         ) {
             Text(
                 torrent.name,
@@ -134,9 +138,10 @@ fun TorrentView(torrent: Torrent) {
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = DEFAULT_PADDING.times(1.5f)),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = DEFAULT_PADDING.times(1.5f)),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             IconAndText(
@@ -212,28 +217,30 @@ fun SearchField(
     }
 
     TextField(
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            errorContainerColor = Color.Transparent,
-        ),
+        colors =
+            TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                errorContainerColor = Color.Transparent,
+            ),
         value = text,
-        modifier = Modifier
-            .focusRequester(focusRequester)
-            .fillMaxWidth()
-            .onFocusChanged {
-                if (focus != it.isFocused) {
-                    focus = it.isFocused
-                } else {
-                    kbController?.hide()
+        modifier =
+            Modifier
+                .focusRequester(focusRequester)
+                .fillMaxWidth()
+                .onFocusChanged {
+                    if (focus != it.isFocused) {
+                        focus = it.isFocused
+                    } else {
+                        kbController?.hide()
+                    }
                 }
-            }
-            .onKeyEvent {
-                if (it.nativeKeyEvent.keyCode == NativeKeyEvent.KEYCODE_ENTER) {
-                    onSubmit()
-                }
-                false
-            },
+                .onKeyEvent {
+                    if (it.nativeKeyEvent.keyCode == NativeKeyEvent.KEYCODE_ENTER) {
+                        onSubmit()
+                    }
+                    false
+                },
         onValueChange = onSearchChange,
         placeholder = {
             Text(stringResource(R.string.search))
@@ -242,10 +249,11 @@ fun SearchField(
             Icon(Icons.Filled.Search, stringResource(R.string.search))
         },
         singleLine = true,
-        keyboardActions = KeyboardActions(onDone = {
-            onSubmit()
-            kbController?.hide()
-        }),
+        keyboardActions =
+            KeyboardActions(onDone = {
+                onSubmit()
+                kbController?.hide()
+            }),
         isError = !isValid,
     )
 }

@@ -9,7 +9,6 @@ import com.torrents_csv_android.ui.components.SearchViewModel
 import com.torrents_csv_android.ui.theme.MainTheme
 
 class MainActivity : ComponentActivity() {
-
     private val vm by viewModels<SearchViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

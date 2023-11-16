@@ -27,9 +27,9 @@ fun SearchActivity(vm: SearchViewModel) {
         content = { padding ->
             Column(
                 modifier =
-                Modifier
-                    .padding(padding)
-                    .imePadding(),
+                    Modifier
+                        .padding(padding)
+                        .imePadding(),
             ) {
                 Row {
                     SearchField(

@@ -9,24 +9,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
-fun MainTheme(
-    content: @Composable () -> Unit,
-) {
+fun MainTheme(content: @Composable () -> Unit) {
     val ctx = LocalContext.current
     val android12OrLater = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
     // Dynamic schemes crash on lower than android 12
-    val dynamicPair = if (android12OrLater) {
-        Pair(dynamicLightColorScheme(ctx), dynamicDarkColorScheme(ctx))
-    } else {
-        pink()
-    }
+    val dynamicPair =
+        if (android12OrLater) {
+            Pair(dynamicLightColorScheme(ctx), dynamicDarkColorScheme(ctx))
+        } else {
+            pink()
+        }
 
-    val systemTheme = if (!isSystemInDarkTheme()) {
-        dynamicPair.first
-    } else {
-        dynamicPair.second
-    }
+    val systemTheme =
+        if (!isSystemInDarkTheme()) {
+            dynamicPair.first
+        } else {
+            dynamicPair.second
+        }
 
     MaterialTheme(
         colorScheme = systemTheme,
