@@ -18,7 +18,7 @@ data class Torrent(
     var name: String,
 )
 
-const val BASE_URL = "https://torrents-csv.ml/service/"
+const val BASE_URL = "https://torrents-csv.com/service/"
 
 interface APIService {
     @GET("search")

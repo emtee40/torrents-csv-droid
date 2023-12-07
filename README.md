@@ -1,6 +1,6 @@
 # Torrents-csv-android
 
-An android client to search https://torrents-csv.ml
+An android client to search https://torrents-csv.com
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"

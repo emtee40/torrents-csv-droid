@@ -86,7 +86,7 @@ fun TorrentListView(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TorrentView(torrent: Torrent) {
-    val context = LocalContext.current
+    val ctx = LocalContext.current
     val magnet = magnetLink(torrent.infohash, torrent.name)
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(magnet))
     val localClipboardManager = LocalClipboardManager.current
@@ -101,10 +101,10 @@ fun TorrentView(torrent: Torrent) {
         Modifier.combinedClickable(
             onClick = {
                 try {
-                    context.startActivity(intent)
+                    ctx.startActivity(intent)
                 } catch (e: ActivityNotFoundException) {
                     Toast.makeText(
-                        context,
+                        ctx,
                         noTorrentAppInstalledStr,
                         Toast.LENGTH_SHORT,
                     ).show()
@@ -113,7 +113,7 @@ fun TorrentView(torrent: Torrent) {
             onLongClick = {
                 localClipboardManager.setText(AnnotatedString(magnet))
                 Toast.makeText(
-                    context,
+                    ctx,
                     magnetLinkCopiedStr,
                     Toast.LENGTH_SHORT,
                 ).show()
